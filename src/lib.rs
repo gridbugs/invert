@@ -1,0 +1,32 @@
+extern crate serde;
+#[macro_use]
+extern crate serde_derive;
+
+use std::cmp::Ordering;
+
+#[derive(Clone, Copy, Debug, Hash, PartialEq, Eq, Serialize, Deserialize)]
+pub struct Invert<T: Ord>(T);
+
+impl<T: Ord> PartialOrd for Invert<T> {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(other.0.cmp(&self.0))
+    }
+}
+
+impl<T: Ord> Ord for Invert<T> {
+    fn cmp(&self, other: &Self) -> Ordering {
+        other.0.cmp(&self.0)
+    }
+}
+
+impl<T: Ord> Invert<T> {
+    pub fn new(t: T) -> Self {
+        Invert(t)
+    }
+    pub fn inner(&self) -> &T {
+        &self.0
+    }
+    pub fn into_inner(self) -> T {
+        self.0
+    }
+}
