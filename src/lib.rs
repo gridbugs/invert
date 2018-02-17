@@ -30,3 +30,32 @@ impl<T: Ord> Invert<T> {
         self.0
     }
 }
+
+pub fn invert<T: Ord>(t: T) -> Invert<T> {
+    Invert::new(t)
+}
+
+#[derive(Clone, Copy, Debug, Hash, PartialEq, Eq, Serialize, Deserialize)]
+pub struct PartialInvert<T: PartialOrd>(T);
+
+impl<T: PartialOrd> PartialOrd for PartialInvert<T> {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        other.0.partial_cmp(&self.0)
+    }
+}
+
+impl<T: PartialOrd> PartialInvert<T> {
+    pub fn new(t: T) -> Self {
+        PartialInvert(t)
+    }
+    pub fn inner(&self) -> &T {
+        &self.0
+    }
+    pub fn into_inner(self) -> T {
+        self.0
+    }
+}
+
+pub fn partial_invert<T: Ord>(t: T) -> PartialInvert<T> {
+    PartialInvert::new(t)
+}
