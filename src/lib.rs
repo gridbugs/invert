@@ -56,6 +56,6 @@ impl<T: PartialOrd> PartialInvert<T> {
     }
 }
 
-pub fn partial_invert<T: Ord>(t: T) -> PartialInvert<T> {
+pub fn partial_invert<T: PartialOrd>(t: T) -> PartialInvert<T> {
     PartialInvert::new(t)
 }
